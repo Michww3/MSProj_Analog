@@ -1,0 +1,27 @@
+﻿<Window x:Class="MSProj_Analog.AddResourceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Resource" Height="1080" Width="1920">
+    <Grid Margin="0,0,35,0">
+        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Resource Name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Resource Type" Binding="{Binding Type}" Width="*" />
+                <DataGridTextColumn Header="Standard Rate" Binding="{Binding StandardRate, StringFormat=c}" Width="*" />
+                <DataGridTextColumn Header="Overtime Rate" Binding="{Binding OvertimeRate, StringFormat=c}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBox x:Name="ResourceNameTextBox" Width="100" Margin="800,150,10,0" VerticalAlignment="Top" Text="Art"/>
+        <TextBox x:Name="ResourceTypeTextBox" Width="100" Margin="800,200,10,0" VerticalAlignment="Top" Text="1"/>
+        <TextBox x:Name="StandardRateTextBox" Width="100" Margin="800, 250, 10, 0" VerticalAlignment="Top" Text="10"/>
+        <TextBox x:Name="OvertimeRateTextBox" Width="100" Margin="800, 300, 10, 0" VerticalAlignment="Top" Text="15"/>
+
+        <Button Content="Add resource" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1280,360,0,0" Click="OnSaveResourceClick"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="1280,129,0,0" TextWrapping="Wrap" Text="Имя ресурса" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Тип ресурса"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1278,229,0,0" TextWrapping="Wrap" Text="Стандартная ставка" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1278,279,0,0" TextWrapping="Wrap" Text="Ставка сверхурочных" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
