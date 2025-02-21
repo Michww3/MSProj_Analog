@@ -1,7 +1,7 @@
 ﻿namespace MSProj_Analog.Interfaces
 {
-    internal interface IAddTaskService
+    public  interface IAddTaskService
     {
-        void AddTask();
+       // void AddTask();
     }
 }

@@ -1,24 +1,37 @@
-﻿namespace MSProj_Analog.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MSProj_Analog.DTOs
 {
     public class ProjectTask
     {
-        public ProjectTask(Resource resource, string name, DateTime startDate, DateTime endDate)
+        public ProjectTask(string name, DateTime startDate, DateTime endDate)
         {
-            Id = Guid.NewGuid();
             Name = name;
             StartDate = startDate;
             EndDate = endDate;
-            AssignedResource.Add(resource);
+            AssignedResource = new List<Resource>();
         }
 
-        private ProjectTask() { }
+        private ProjectTask() 
+        {
+            AssignedResource = new List<Resource>();
+        }
+        [Key]
+        public int Id { get; set; }
 
-        public Guid Id { get; set; }
+        [Required,MaxLength(30)]
         public string Name { get; private set; }
+
+        [Required]
         public DateTime StartDate { get; private set; }
+
+        [Required]
         public DateTime EndDate { get; private set; }
+
+        [Required]
         public List<Resource> AssignedResource { get; set; }
-        public ProjectTask? PreviousTask { get; private set; }
-        public ProjectTask? NextTask { get; private set; }
+
+        //public ProjectTask? PreviousTask { get; private set; }
+        //public ProjectTask? NextTask { get; private set; }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace MSProj_Analog.Services
 {
-    internal class AddTaskService : IAddResourceService
+    internal class AddTaskService : IAddTaskService
     {
-        public void AddResource()
+        public void AddTask()
         {
 
         }

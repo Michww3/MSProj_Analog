@@ -1,0 +1,36 @@
+﻿<Window x:Class="MSProj_Analog.AddTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MSProj_Analog"
+        mc:Ignorable="d"
+        Title="AddTask" Height="1080" Width="1920" WindowState="Maximized">
+
+    <Grid>
+        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
+                <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat=d}" Width="*" />
+                <DataGridTextColumn Header="End date" Binding="{Binding EndDate, StringFormat=d}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBox x:Name="TaskNameTextBox" Width="100" Margin="1262,77,523,0" VerticalAlignment="Top" Text="Art"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Имя задачи" VerticalAlignment="Top"/>
+
+        <Calendar x:Name="StartDateCalendar" Margin="1238,129,499,766"/>
+        <Calendar x:Name="EndDateCalendar" Margin="1238,336,499,558"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Дата начала" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,320,0,0" TextWrapping="Wrap" Text="Дата окнчания" VerticalAlignment="Top"/>
+        <Button Content="Add task" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1280,544,0,0" Click="OnAddTaskClick"/>
+        
+        <Button Content="Add resource to task" HorizontalAlignment="Left" Margin="1258,910,0,0" VerticalAlignment="Top" Height="132" Width="144" Click="OnAddResourceToTaskClick"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1258,842,0,0" TextWrapping="Wrap" Text="Resource id" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1341,842,0,0" TextWrapping="Wrap" Text="Task id" VerticalAlignment="Top"/>
+        <TextBox x:Name="ResourceIdTextBox" HorizontalAlignment="Left" Margin="1279,868,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" Height="25"/>
+        <TextBox x:Name="TaskIdTextBox" HorizontalAlignment="Left" Margin="1349,868,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" Height="25"/>
+
+
+    </Grid>
+</Window>
