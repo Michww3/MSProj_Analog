@@ -1,4 +1,5 @@
-﻿using MSProj_Analog.Config;
+﻿using Microsoft.EntityFrameworkCore;
+using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using System.Collections.ObjectModel;
@@ -18,6 +19,7 @@ namespace MSProj_Analog
             Tasks = tasks;
             DataContext = this;
         }
+
         private void OnAddTaskClick(object sender, RoutedEventArgs e)
         {
             string name = TaskNameTextBox.Text;
@@ -43,6 +45,18 @@ namespace MSProj_Analog
 
                 var res = context.Resources.SingleOrDefault(r => r.Id == resourceId);
                 var task = context.Tasks.SingleOrDefault(t => t.Id == taskId);
+
+                //var rs = context.Resources
+                //    .Where(r => r.Id == resourceId)
+                //    .ExecuteUpdate(r => r
+                //    .SetProperty(r => r.ProjectTask, 
+                //    context.Tasks.SingleOrDefault(t => t.Id == taskId)));
+
+                //var ts = context.Tasks
+                //    .Where(t => t.Id == taskId)
+                //    .ExecuteUpdate(t => t
+                //    .SetProperty(t => t.AssignedResource, 
+                //    context.Resources.SingleOrDefault(r => r.Id == resourceId)));
 
                 if (res != null && task != null)
                 {
