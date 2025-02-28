@@ -2,8 +2,6 @@
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using MSProj_Analog.Interfaces;
-using System.Threading.Tasks;
-using Xceed.Wpf.AvalonDock.Properties;
 using Xceed.Wpf.Toolkit;
 
 namespace MSProj_Analog.Services

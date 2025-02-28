@@ -35,9 +35,10 @@ namespace MSProj_Analog
             Parameters = e.Args;
             base.OnStartup(e);
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+            var addResourceWindow = _host.Services.GetRequiredService<AddResourceWindow>();
+            var addTaskWindow = _host.Services.GetRequiredService<AddTaskWindow>();
+            var addResourceToTaskWindow = _host.Services.GetRequiredService<AddResourceToTaskWindow>();
 
-            //var addResourceWindow = _host.Services.GetRequiredService<AddResourceWindow>();
-            //addResourceWindow.Resources = new ObservableCollection<Resource>();
             using (var context = new AppDbContext())
             {
                 var resultResourceList = context.Resources.Where(r => r.ProjectTaskId == null).ToList();
