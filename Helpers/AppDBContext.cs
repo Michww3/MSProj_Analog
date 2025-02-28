@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
-using System;
-using System.Windows;
 
 namespace MSProj_Analog.Helpers
 {

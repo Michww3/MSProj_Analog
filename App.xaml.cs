@@ -19,8 +19,8 @@ namespace MSProj_Analog
         }
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IAddResourceService, AddResourceService>();
-            services.AddSingleton<IAddTaskService, AddTaskService>();
+            services.AddSingleton<IAddResource, AddResourceService>();
+            services.AddSingleton<IAddTask, AddTaskService>();
             services.AddSingleton<MainWindow>();
         }
         protected override void OnStartup(StartupEventArgs e)
@@ -36,10 +36,10 @@ namespace MSProj_Analog
                 var resultResourceList = context.Resources.Where(r => r.ProjectTaskId == null).ToList();
                 mainWindow.Resources = new ObservableCollection<Resource>(resultResourceList);
 
-                var resultTaskList = context.Tasks.Where(t => t.AssignedResource != null).ToList();
+                var resultTaskList = context.Tasks.Where(t => t.Resource == null).ToList();
                 mainWindow.Tasks = new ObservableCollection<ProjectTask>(resultTaskList);
 
-                var resultFulltaskList = context.Tasks.Where(t => t.AssignedResource == null).ToList();
+                var resultFulltaskList = context.Tasks.Where(t => t.Resource != null).ToList();
                 mainWindow.FullTasks = new ObservableCollection<ProjectTask>(resultFulltaskList);
             }
 

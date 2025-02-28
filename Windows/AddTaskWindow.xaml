@@ -1,0 +1,31 @@
+﻿<Window x:Class="MSProj_Analog.AddTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MSProj_Analog"   
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        Title="AddTask" Height="1080" Width="1920" WindowState="Maximized">
+
+    <Grid>
+        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
+                <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat=d}" Width="*" />
+                <DataGridTextColumn Header="End date" Binding="{Binding EndDate, StringFormat=d}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBox x:Name="TaskNameTextBox" Width="100" Margin="1264,77,556,0" VerticalAlignment="Top" Text="Art"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Имя задачи" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Дата начала" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1272,183,0,0" TextWrapping="Wrap" Text="Дата окнчания" VerticalAlignment="Top"/>
+        <Button Content="Add task" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,268,0,0" Click="OnAddTaskClick"/>
+
+        <xctk:MaskedTextBox x:Name="StartDateTextBox" Margin="1119,702,735,338" Mask="00/00/0000" PromptChar=" "/>
+        <xctk:MaskedTextBox x:Name="EndDateTextBox" Margin="1355,702,499,338" Mask="00/00/0000" PromptChar=" "/>
+        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="1263,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.431,-3.957"/>
+        <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="1264,134,0,0" VerticalAlignment="Top" Text="Дата начала"/>
+
+    </Grid>
+</Window>
