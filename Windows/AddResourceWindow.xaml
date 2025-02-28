@@ -20,9 +20,9 @@
 
         <Button Content="Add resource" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1280,360,0,0" Click="OnAddResourceClick"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="1280,129,0,0" TextWrapping="Wrap" Text="Имя ресурса" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1280,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Тип ресурса"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1278,229,0,0" TextWrapping="Wrap" Text="Стандартная ставка" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1278,279,0,0" TextWrapping="Wrap" Text="Ставка сверхурочных" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,129,0,0" TextWrapping="Wrap" Text="Resource name" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Resource type"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1278,229,0,0" TextWrapping="Wrap" Text="Standart rate" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1278,279,0,0" TextWrapping="Wrap" Text="Overtime rate" VerticalAlignment="Top"/>
     </Grid>
 </Window>

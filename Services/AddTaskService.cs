@@ -4,11 +4,16 @@ using MSProj_Analog.Interfaces;
 
 namespace MSProj_Analog.Services
 {
-    public class AddTaskService : IAddTask
+    public class AddTaskService : IAddTaskService
     {
         public void AddTask(ICollection<ProjectTask> tasks, AppDbContext context, ProjectTask task)
         {
-            throw new NotImplementedException();
+            tasks.Add(task);
+            using (context)
+            {
+                context.Tasks.Add(task);
+                context.SaveChanges();
+            }
         }
     }
 }

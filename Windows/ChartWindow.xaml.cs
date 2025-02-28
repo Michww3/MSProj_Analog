@@ -1,8 +1,7 @@
-﻿using LiveCharts.Defaults;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-using LiveCharts;
 using MSProj_Analog.DTOs;
-using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace MSProj_Analog.Windows

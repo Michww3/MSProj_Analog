@@ -3,9 +3,8 @@ using MSProj_Analog.Helpers;
 
 namespace MSProj_Analog.Interfaces
 {
-    public interface IAddResource
+    public interface IAddResourceService
     {
         public void AddResource(ICollection<Resource> resources,AppDbContext context, Resource res);
-
     }
 }

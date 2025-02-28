@@ -4,9 +4,7 @@ using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
-using Xceed.Wpf.AvalonDock.Properties;
 
 namespace MSProj_Analog
 {
@@ -25,8 +23,20 @@ namespace MSProj_Analog
         }
         public void OnAddResourceToTaskClick(object sender, RoutedEventArgs e)
         {
-            var resourceId = Int32.Parse(ResourceIdTextBox.Text);
-            var taskId = Int32.Parse(TaskIdTextBox.Text);
+            int resourceId = -1;
+            int taskId = -1;
+            //var resourceId = Int32.Parse(ResourceIdTextBox.Text);
+            //var taskId = Int32.Parse(TaskIdTextBox.Text);
+            try
+            {
+                resourceId = Int32.Parse(ResourceIdTextBox.Text);
+                taskId = Int32.Parse(TaskIdTextBox.Text);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show(ConfigOptions.Messages.InvalidData);
+                return;
+            }
 
             var res = Resources.FirstOrDefault(r => r.Id == resourceId);
             var task = Tasks.FirstOrDefault(t => t.Id == taskId);
@@ -70,7 +80,7 @@ namespace MSProj_Analog
                 }
                 else
                 {
-                    MessageBox.Show(ConfigOptions.Messages.InvalidDataMessage);
+                    MessageBox.Show(ConfigOptions.Messages.InvalidData);
                 }
             }
         }

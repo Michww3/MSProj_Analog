@@ -1,4 +1,5 @@
-﻿using MSProj_Analog.DTOs;
+﻿using MSProj_Analog.Config;
+using MSProj_Analog.DTOs;
 using MSProj_Analog.Enums;
 using MSProj_Analog.Helpers;
 using System.Collections.ObjectModel;
@@ -33,7 +34,13 @@ namespace MSProj_Analog
             string name = ResourceNameTextBox.Text;
             decimal standardRate = Decimal.Parse(StandardRateTextBox.Text);
             decimal? overtimeRate = Decimal.Parse(OvertimeRateTextBox.Text);
-            ResourceType resource = (ResourceType)int.Parse(ResourceTypeTextBox.Text);
+            if (!int.TryParse(ResourceTypeTextBox.Text, out int typeValue) || !Enum.IsDefined(typeof(ResourceType), typeValue))
+            {
+                MessageBox.Show(ConfigOptions.Messages.InvalidResourceType, ConfigOptions.Messages.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            ResourceType resource = (ResourceType)typeValue;
+
 
             var newResource = new Resource(resource, name, standardRate, overtimeRate);
 

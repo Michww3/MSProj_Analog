@@ -17,9 +17,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <TextBox x:Name="TaskNameTextBox" Width="100" Margin="1264,77,556,0" VerticalAlignment="Top" Text="Art"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Имя задачи" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Дата начала" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1272,183,0,0" TextWrapping="Wrap" Text="Дата окнчания" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Task name" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Start date" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1272,183,0,0" TextWrapping="Wrap" Text="End date" VerticalAlignment="Top"/>
         <Button Content="Add task" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,268,0,0" Click="OnAddTaskClick"/>
 
         <xctk:MaskedTextBox x:Name="StartDateTextBox" Margin="1119,702,735,338" Mask="00/00/0000" PromptChar=" "/>

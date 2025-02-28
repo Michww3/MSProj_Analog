@@ -4,6 +4,7 @@ using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using MSProj_Analog.Interfaces;
 using MSProj_Analog.Services;
+using MSProj_Analog.Windows;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -13,14 +14,20 @@ namespace MSProj_Analog
     {
         public string[] Parameters { get; set; }
         private readonly IHost _host;
+        public static IServiceProvider Services => ((App)Current)._host.Services;
         public App()
         {
             _host = Host.CreateDefaultBuilder().ConfigureServices(ConfigureServices).Build();
         }
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IAddResource, AddResourceService>();
-            services.AddSingleton<IAddTask, AddTaskService>();
+            services.AddSingleton<IAddResourceService, AddResourceService>();
+            services.AddSingleton<IAddTaskService, AddTaskService>();
+            services.AddSingleton<IAddResourceToTaskService, AddResourceToTaskService>();
+            services.AddSingleton<ChartWindow>();
+            services.AddSingleton<AddTaskWindow>();
+            services.AddSingleton<AddResourceWindow>();
+            services.AddSingleton<AddTaskWindow>();
             services.AddSingleton<MainWindow>();
         }
         protected override void OnStartup(StartupEventArgs e)

@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MSProj_Analog.Config;
+﻿using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MSProj_Analog
@@ -25,14 +23,21 @@ namespace MSProj_Analog
             string name = TaskNameTextBox.Text;
             DateTime startDate = StartDatePicker.DisplayDate;
             DateTime endDate = EndDatePicker.DisplayDate;
-            var task = new ProjectTask(name, startDate, endDate);
-
-            Tasks.Add(task);
-
-            using(var context  = new AppDbContext())
+            if (startDate > endDate)
             {
-                context.Tasks.Add(task);
-                context.SaveChanges();  
+                MessageBox.Show(ConfigOptions.Messages.InvalidData);
+            }
+            else
+            {
+                var task = new ProjectTask(name, startDate, endDate);
+
+                Tasks.Add(task);
+
+                using (var context = new AppDbContext())
+                {
+                    context.Tasks.Add(task);
+                    context.SaveChanges();
+                }
             }
         }
 
