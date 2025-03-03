@@ -6,7 +6,7 @@ namespace MSProj_Analog.Services
 {
     public class AddTaskService : IAddTaskService
     {
-        public void AddTask(ICollection<ProjectTask> tasks, AppDbContext context, ProjectTask task)
+        public void AddTask(AppDbContext context,ICollection<ProjectTask> tasks,  ProjectTask task)
         {
             tasks.Add(task);
             using (context)

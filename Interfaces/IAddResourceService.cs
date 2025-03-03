@@ -5,6 +5,6 @@ namespace MSProj_Analog.Interfaces
 {
     public interface IAddResourceService
     {
-        public void AddResource(ICollection<Resource> resources,AppDbContext context, Resource res);
+        public void AddResource(AppDbContext context, ICollection<Resource> resources, Resource res);
     }
 }

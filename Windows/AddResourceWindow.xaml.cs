@@ -1,15 +1,19 @@
-﻿using MSProj_Analog.Config;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Enums;
 using MSProj_Analog.Helpers;
+using MSProj_Analog.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 
 namespace MSProj_Analog
 {
-    public partial class AddResourceWindow : Window, INotifyPropertyChanged
+    public partial class AddResourceWindow: Window, INotifyPropertyChanged
     {
+        IAddResourceService addResourceService = App.Services.GetRequiredService<IAddResourceService>();
+
         private ObservableCollection<Resource> _resources;
         public new ObservableCollection<Resource> Resources
         {
@@ -23,14 +27,11 @@ namespace MSProj_Analog
             Resources = resources;
             DataContext = this;
         }
-        public AddResourceWindow()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }
+
 
         private void OnAddResourceClick(object sender, RoutedEventArgs e)
         {
+
             string name = ResourceNameTextBox.Text;
             decimal standardRate = Decimal.Parse(StandardRateTextBox.Text);
             decimal? overtimeRate = Decimal.Parse(OvertimeRateTextBox.Text);
@@ -41,15 +42,9 @@ namespace MSProj_Analog
             }
             ResourceType resource = (ResourceType)typeValue;
 
-
             var newResource = new Resource(resource, name, standardRate, overtimeRate);
 
-            Resources.Add(newResource);
-            using (var context = new AppDbContext())
-            {
-                context.Resources.Add(newResource);
-                context.SaveChanges();
-            }
+            addResourceService.AddResource(new AppDbContext(),Resources,newResource);
 
         }
         public event PropertyChangedEventHandler PropertyChanged;

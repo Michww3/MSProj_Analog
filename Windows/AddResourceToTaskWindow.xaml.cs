@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
+using MSProj_Analog.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -11,6 +12,7 @@ namespace MSProj_Analog
 
     public partial class AddResourceToTaskWindow : Window, INotifyPropertyChanged
     {
+        IAddResourceToTaskService addResourceToTaskService = App.Services.GetRequiredService<IAddResourceToTaskService>();
         public ObservableCollection<ProjectTask> Tasks { get; set; }
         new public ObservableCollection<Resource> Resources { get; set; }
 
@@ -23,10 +25,9 @@ namespace MSProj_Analog
         }
         public void OnAddResourceToTaskClick(object sender, RoutedEventArgs e)
         {
-            int resourceId = -1;
-            int taskId = -1;
-            //var resourceId = Int32.Parse(ResourceIdTextBox.Text);
-            //var taskId = Int32.Parse(TaskIdTextBox.Text);
+            int resourceId;
+            int taskId;
+
             try
             {
                 resourceId = Int32.Parse(ResourceIdTextBox.Text);
@@ -37,52 +38,8 @@ namespace MSProj_Analog
                 MessageBox.Show(ConfigOptions.Messages.InvalidData);
                 return;
             }
+            addResourceToTaskService.AddResourceToTask(new AppDbContext(), Tasks, Resources, resourceId, taskId);
 
-            var res = Resources.FirstOrDefault(r => r.Id == resourceId);
-            var task = Tasks.FirstOrDefault(t => t.Id == taskId);
-            using (var context = new AppDbContext())
-            {
-                //var res = context.Resources.SingleOrDefault(r => r.Id == resourceId);
-                //var task = context.Tasks.SingleOrDefault(t => t.Id == taskId);
-
-                //var rs = context.Resources
-                //    .Where(r => r.Id == resourceId)
-                //    .ExecuteUpdate(r => r
-                //    .SetProperty(r => r.ProjectTask,
-                //    context.Tasks.SingleOrDefault(t => t.Id == taskId)));
-
-                //var ts = context.Tasks
-                //    .Where(t => t.Id == taskId)
-                //    .ExecuteUpdate(t => t
-                //    .SetProperty(t => t.Resource,
-                //    context.Resources.SingleOrDefault(r => r.Id == resourceId)));
-
-                var dbRes = context.Resources.SingleOrDefault(r => r.Id == resourceId);
-                var dbTask = context.Tasks.SingleOrDefault(t => t.Id == taskId);
-
-                //if (res != null && task != null)
-                //{
-                //    res.ProjectTask = task;
-                //    task.Resource = res;
-                //    context.Resources.Update(res);
-                //    context.Tasks.Update(task);
-                //    context.SaveChanges();
-                //    Tasks.Remove(task);
-                //    Resources.Remove(res);
-                //}
-                if (dbRes != null && dbTask != null)
-                {
-                    dbRes.ProjectTask = dbTask;
-                    dbTask.Resource = dbRes;
-                    context.SaveChanges();
-                    Tasks.Remove(task);
-                    Resources.Remove(res);
-                }
-                else
-                {
-                    MessageBox.Show(ConfigOptions.Messages.InvalidData);
-                }
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

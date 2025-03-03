@@ -30,7 +30,10 @@
         <TextBlock HorizontalAlignment="Left" Margin="1788,53,0,0" TextWrapping="Wrap" Text="Task id" VerticalAlignment="Top"/>
         <TextBox x:Name="ResourceIdTextBox" HorizontalAlignment="Left" Margin="1720,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" Height="25"/>
         <TextBox x:Name="TaskIdTextBox" HorizontalAlignment="Left" Margin="1793,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" Height="25"/>
-        <Button x:Name="AddResourceToTask" Content="Add resource to task" HorizontalAlignment="Left" Margin="1702,137,0,0" VerticalAlignment="Top" Height="88" Width="121" Click="OnAddResourceToTaskClick"/>
+        <Button x:Name="AddResourceToTask" Content="Add resource to task" HorizontalAlignment="Left" Margin="1670,121,0,0" VerticalAlignment="Top" Height="60" Width="204" Click="OnAddResourceToTaskClick" Background="#9a8e87"
+        Foreground="White"
+        FontFamily="Arial"
+        FontSize="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="344,8,0,0" TextWrapping="Wrap" Text="Resource list" VerticalAlignment="Top" FontSize="24"/>
         <TextBlock HorizontalAlignment="Left" Margin="1185,8,0,0" TextWrapping="Wrap" Text="Task list" VerticalAlignment="Top" Width="106" FontSize="24"/>
     </Grid>

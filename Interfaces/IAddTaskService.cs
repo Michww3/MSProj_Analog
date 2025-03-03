@@ -5,6 +5,6 @@ namespace MSProj_Analog.Interfaces
 {
     public  interface IAddTaskService
     {
-       public void AddTask(ICollection<ProjectTask> tasks,AppDbContext context, ProjectTask task);
+       public void AddTask(AppDbContext context, ICollection<ProjectTask> tasks, ProjectTask task);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
+using MSProj_Analog.Interfaces;
 using MSProj_Analog.Windows;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -29,15 +30,11 @@ namespace MSProj_Analog
             get { return _fullTasks; }
             set { _fullTasks = value; OnPropertyChanged("FullTasks"); }
         }
-        public MainWindow()
+
+        public MainWindow(IAddResourceService addResourceService)
         {
             InitializeComponent();
             DataContext = this;
-            //using(var context = new AppDbContext())
-            //{
-            //    var resultList = context.Resources.Where(r => r.ProjectTaskId == null).ToList<Resource>();
-            //    Resources = new ObservableCollection<Resource>(resultList);
-            //}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

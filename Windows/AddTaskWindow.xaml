@@ -20,10 +20,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Task name" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Start date" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1272,183,0,0" TextWrapping="Wrap" Text="End date" VerticalAlignment="Top"/>
-        <Button Content="Add task" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,268,0,0" Click="OnAddTaskClick"/>
+        <Button Content="Add task" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,268,0,0" Click="OnAddTaskClick" Background="#9a8e87"
+        Foreground="White"
+        FontFamily="Arial"
+        FontSize="20"/>
 
-        <xctk:MaskedTextBox x:Name="StartDateTextBox" Margin="1119,702,735,338" Mask="00/00/0000" PromptChar=" "/>
-        <xctk:MaskedTextBox x:Name="EndDateTextBox" Margin="1355,702,499,338" Mask="00/00/0000" PromptChar=" "/>
         <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="1263,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.431,-3.957"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="1264,134,0,0" VerticalAlignment="Top" Text="Дата начала"/>
 

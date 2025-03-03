@@ -33,4 +33,3 @@ namespace MSProj_Analog.Services
         }
     }
 }
-

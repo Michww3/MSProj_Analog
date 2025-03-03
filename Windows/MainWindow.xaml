@@ -12,10 +12,29 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1522,10" Width="160" Height="100" Click="OnAddResourceClick"/>
-        <Button Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick"/>
-        <Button Content="Create charts" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateChartsClick"/>
-        <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="478,0,1282,10"  Height="100" Width="160" Click="OnAddResourceToTaskClick"/>
+        <Button Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1522,10" Width="160" Height="100" Click="OnAddResourceClick"
+        Background="#9a8e87"
+        Foreground="White"
+        FontFamily="Arial"
+        FontSize="20"/>
+        
+        <Button Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick"
+        Background="#9a8e87"
+        Foreground="White"
+        FontFamily="Arial"
+        FontSize="20"/>
+
+        <Button Content="Create charts" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateChartsClick"
+        Background="#9a8e87"
+        Foreground="White"
+        FontFamily="Arial"
+        FontSize="20"/>
+        
+        <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="478,0,1224,10"  Height="100" Click="OnAddResourceToTaskClick" 
+        Background="#9a8e87"
+        Foreground="White"
+        FontFamily="Arial"
+        FontSize="20"/>
 
 
     </Grid>
