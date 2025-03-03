@@ -1,48 +1,59 @@
-﻿using PdfSharp.Pdf;
-using PdfSharp.Drawing;
-using LiveCharts;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using MSProj_Analog.DTOs;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace MSProj_Analog.Windows
 {
-    public partial class PieChartWindow : Window
+
+    public partial class GanttChartWindow : Window
     {
         public SeriesCollection SeriesCollection { get; set; }
+        public string[] TaskLabels { get; set; }
+        public Func<double, string> DateFormatter { get; set; }
 
-        public PieChartWindow(ICollection<ProjectTask> tasks)
+        public GanttChartWindow(ICollection<ProjectTask> tasks)
         {
             InitializeComponent();
-            LoadPieChart(tasks);
+            LoadGanttChart(tasks);
             DataContext = this;
         }
 
-        private void LoadPieChart(ICollection<ProjectTask> tasks)
+        private void LoadGanttChart(ICollection<ProjectTask> tasks)
         {
             SeriesCollection = new SeriesCollection();
+            TaskLabels = tasks.Select(t => t.Name).ToArray();
+            DateFormatter = val => new DateTime((long)val).ToShortDateString();
 
+            int index = 0;
             foreach (var task in tasks)
             {
-                double duration = (task.EndDate - task.StartDate).TotalDays;
+                var start = task.StartDate.Ticks;
+                var end = task.EndDate.Ticks;
+                var duration = end - start;
 
-                SeriesCollection.Add(new PieSeries
+                SeriesCollection.Add(new RowSeries
                 {
                     Title = task.Name,
-                    Values = new ChartValues<double> { duration },
+                    Values = new ChartValues<GanttPoint> { new GanttPoint(start, end) },
                     DataLabels = true
                 });
+
+                index++;
             }
 
-            PieChart.Series = SeriesCollection;
+            GanttChart.Series = SeriesCollection;
         }
 
         private void ExportToPDFButton_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = "C:\\Users\\User\\Desktop\\PieChart.pdf";
+            string filePath = "C:\\Users\\User\\Desktop\\Ganttchart.pdf";
             ExportPieChartToPdf(filePath);
         }
 
@@ -65,9 +76,9 @@ namespace MSProj_Analog.Windows
                 96, 96, PixelFormats.Pbgra32);
 
             // Рисуем диаграмму в RenderTarget
-            PieChart.Measure(renderSize);
-            PieChart.Arrange(new System.Windows.Rect(0, 0, renderSize.Width, renderSize.Height));
-            renderTarget.Render(PieChart);
+            GanttChart.Measure(renderSize);
+            GanttChart.Arrange(new System.Windows.Rect(0, 0, renderSize.Width, renderSize.Height));
+            renderTarget.Render(GanttChart);
 
             // Сохраняем изображение в MemoryStream
             var memoryStream = new MemoryStream();

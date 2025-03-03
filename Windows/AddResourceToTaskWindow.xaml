@@ -33,15 +33,15 @@
                 <DataGridTextColumn Header="End date" Binding="{Binding EndDate, StringFormat=d}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        
+
         <TextBlock HorizontalAlignment="Left" Margin="1702,53,0,0" TextWrapping="Wrap" Text="Resource id" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1788,53,0,0" TextWrapping="Wrap" Text="Task id" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="344,8,0,0" TextWrapping="Wrap" Text="Resource list" VerticalAlignment="Top" FontSize="24"/>
         <TextBlock HorizontalAlignment="Left" Margin="1185,8,0,0" TextWrapping="Wrap" Text="Task list" VerticalAlignment="Top" Width="106" FontSize="24"/>
-        
+
         <TextBox x:Name="ResourceIdTextBox" HorizontalAlignment="Left" Margin="1723,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" Height="20"/>
         <TextBox x:Name="TaskIdTextBox" HorizontalAlignment="Left" Margin="1796,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" Height="20"/>
 
-        <Button x:Name="AddResourceToTask" Content="Add resource to task" HorizontalAlignment="Left" Margin="1670,121,0,0" VerticalAlignment="Top" Height="60" Width="204" Click="OnAddResourceToTaskClick" FontSize="14" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddResourceToTask" Content="Add resource to task" HorizontalAlignment="Left" Margin="1693,115,0,0" VerticalAlignment="Top" Height="60" Width="160" Click="OnAddResourceToTaskClick" FontSize="14" Style="{DynamicResource PrimaryButtonStyle}"/>
     </Grid>
 </Window>

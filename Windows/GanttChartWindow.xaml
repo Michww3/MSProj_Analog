@@ -1,9 +1,12 @@
-﻿<Window
+﻿<Window x:Class="MSProj_Analog.Windows.GanttChartWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="MSProj_Analog.Windows.PieChartWindow"
-        Title="Pie Chart Task Duration" Height="1080" Width="1920" WindowState="Maximized">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MSProj_Analog.Windows"
+        mc:Ignorable="d"
+        Title="GanttChartWindow" Height="1080" Width="1920" WindowState="Maximized"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,12 +15,14 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="49*"/>
-            <ColumnDefinition Width="50*"/>
-        </Grid.ColumnDefinitions>
-        <lvc:PieChart Name="PieChart"
-                      LegendLocation="Right" Margin="0,60,0,0" Grid.ColumnSpan="2"/>
+        <lvc:CartesianChart x:Name="GanttChart">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Дата" LabelFormatter="{Binding DateFormatter}" />
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Задачи" Labels="{Binding TaskLabels}" />
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
         <Button x:Name="ExportToSVGButton" Content="Export to SVG" Margin="0,5,40,0" VerticalAlignment="Top" Style="{DynamicResource ResourceKey=PrimaryButtonStyle}" HorizontalAlignment="Right" Width="110" Click="ExportToSVGButton_Click" Height="43" />
         <Button x:Name="ExportToPDFButton" Content="Export to PDF" Margin="40,5,0,0" VerticalAlignment="Top" Style="{DynamicResource ResourceKey=PrimaryButtonStyle}" Click="ExportToPDFButton_Click" Height="43" Grid.Column="1" HorizontalAlignment="Left" Width="107"/>
     </Grid>

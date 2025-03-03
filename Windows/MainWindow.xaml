@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="MSProj_Analog.MainWindow"
         Title="Resource Planning" Height="1080" Width="1920" WindowState="Maximized">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,11 +22,11 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1532,10" Width="160" Height="100" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
-        <Button Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddRecourceButton" Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1532,10" Width="160" Height="100" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddTaskButton" Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
         <Button x:Name="CreateGanttChart" Content="Create gantt chart" HorizontalAlignment="Left" Margin="712,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateGanttChartClick" Style="{DynamicResource PrimaryButtonStyle}"/>
         <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="440,0,1262,10"  Height="100" Click="OnAddResourceToTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
-        <Button Content="Create pie chart" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="OnCreatePieChartClick"/>
+        <Button x:Name="CreatePieChartButton" Content="Create pie chart" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="OnCreatePieChartClick"/>
 
     </Grid>
 </Window>

@@ -1,6 +1,5 @@
 ﻿using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
-using MSProj_Analog.Interfaces;
 using MSProj_Analog.Windows;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -69,7 +68,7 @@ namespace MSProj_Analog
         }
         private void OnCreateGanttChartClick(object sender, RoutedEventArgs e)
         {
-            var chartWindow = new ChartWindow(FullTasks);
+            var chartWindow = new GanttChartWindow(FullTasks);
             chartWindow.ShowDialog();
         }
         private void OnCreatePieChartClick(object sender, RoutedEventArgs e)

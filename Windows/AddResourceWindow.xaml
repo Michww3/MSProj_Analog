@@ -25,7 +25,7 @@
         <TextBox x:Name="StandardRateTextBox" Width="100" Margin="800, 250, 10, 0" VerticalAlignment="Top" Text="10"/>
         <TextBox x:Name="OvertimeRateTextBox" Width="100" Margin="800, 300, 10, 0" VerticalAlignment="Top" Text="15"/>
 
-        <Button Content="Add resource" Width="159" Height="62" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1270,360,0,0" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button Content="Add resource" Width="118" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1270,360,0,0" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="1280,129,0,0" TextWrapping="Wrap" Text="Resource name" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1280,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Resource type"/>

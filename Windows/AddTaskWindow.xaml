@@ -26,7 +26,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Task name" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Start date" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1272,183,0,0" TextWrapping="Wrap" Text="End date" VerticalAlignment="Top"/>
-        <Button Content="Add task" Width="100" Height="53" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,259,0,0" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddTaskButton" Content="Add task" Width="100" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,259,0,0" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
 
         <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="1263,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.431,-3.957"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="1264,134,0,0" VerticalAlignment="Top" Text="Дата начала"/>
