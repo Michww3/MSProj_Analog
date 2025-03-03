@@ -7,6 +7,7 @@ using MSProj_Analog.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using Xceed.Wpf.AvalonDock.Properties;
 
 namespace MSProj_Analog
 {
@@ -35,12 +36,18 @@ namespace MSProj_Analog
             string name = ResourceNameTextBox.Text;
             decimal standardRate = Decimal.Parse(StandardRateTextBox.Text);
             decimal? overtimeRate = Decimal.Parse(OvertimeRateTextBox.Text);
-            if (!int.TryParse(ResourceTypeTextBox.Text, out int typeValue) || !Enum.IsDefined(typeof(ResourceType), typeValue))
+            var selectedItem = ResourceTypeComboBox.SelectedValue as string;
+            ResourceType resource;
+            if (selectedItem != null)
             {
-                MessageBox.Show(ConfigOptions.Messages.InvalidResourceType, ConfigOptions.Messages.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                resource = (ResourceType)Enum.Parse(typeof(ResourceType), selectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Please select a valid resource type.");
                 return;
             }
-            ResourceType resource = (ResourceType)typeValue;
+
 
             var newResource = new Resource(resource, name, standardRate, overtimeRate);
 
@@ -57,5 +64,11 @@ namespace MSProj_Analog
         {
 
         }
+        private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
+
+
     }
 }

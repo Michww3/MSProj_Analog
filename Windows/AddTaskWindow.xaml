@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:MSProj_Analog"   
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         Title="AddTask" Height="1080" Width="1920" WindowState="Maximized">
-
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Windows/Resources/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
@@ -20,10 +26,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="1280,56,0,0" TextWrapping="Wrap" Text="Task name" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1280,113,0,0" TextWrapping="Wrap" Text="Start date" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1272,183,0,0" TextWrapping="Wrap" Text="End date" VerticalAlignment="Top"/>
-        <Button Content="Add task" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,268,0,0" Click="OnAddTaskClick" Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
+        <Button Content="Add task" Width="100" Height="53" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1264,259,0,0" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
 
         <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="1263,204,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.431,-3.957"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="1264,134,0,0" VerticalAlignment="Top" Text="Дата начала"/>

@@ -1,7 +1,16 @@
-﻿<Window x:Class="MSProj_Analog.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="MSProj_Analog.MainWindow"
         Title="Resource Planning" Height="1080" Width="1920" WindowState="Maximized">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Windows/Resources/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <DataGrid ItemsSource="{Binding FullTasks}" AutoGenerateColumns="False" Margin="10,10,10,200">
             <DataGrid.Columns>
@@ -12,31 +21,11 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1522,10" Width="160" Height="100" Click="OnAddResourceClick"
-        Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
-        
-        <Button Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick"
-        Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
-
-        <Button Content="Create charts" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateChartsClick"
-        Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
-        
-        <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="478,0,1224,10"  Height="100" Click="OnAddResourceToTaskClick" 
-        Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
-
+        <Button Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1532,10" Width="160" Height="100" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="CreateGanttChart" Content="Create gantt chart" HorizontalAlignment="Left" Margin="712,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateGanttChartClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="440,0,1262,10"  Height="100" Click="OnAddResourceToTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button Content="Create pie chart" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="OnCreatePieChartClick"/>
 
     </Grid>
 </Window>
-    

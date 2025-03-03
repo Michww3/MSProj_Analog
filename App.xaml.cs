@@ -24,10 +24,6 @@ namespace MSProj_Analog
             services.AddSingleton<IAddResourceService, AddResourceService>();
             services.AddSingleton<IAddTaskService, AddTaskService>();
             services.AddSingleton<IAddResourceToTaskService, AddResourceToTaskService>();
-            services.AddSingleton<ChartWindow>();
-            services.AddSingleton<AddTaskWindow>();
-            services.AddSingleton<AddResourceWindow>();
-            services.AddSingleton<AddTaskWindow>();
             services.AddSingleton<MainWindow>();
         }
         protected override void OnStartup(StartupEventArgs e)

@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:MSProj_Analog"
         mc:Ignorable="d"
         Title="AddResourceToTaskWindow" Height="1080" Width="1920" WindowState="Maximized">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Windows/Resources/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,40
-                  ,1110,10" SelectionChanged="DataGrid_SelectionChanged">
+                  ,1110,10" SelectionChanged="ResourcesDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Resource id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Resource Name" Binding="{Binding Name}" Width="*" />
@@ -18,7 +25,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="840
-                  ,40,284,10" SelectionChanged="DataGrid_SelectionChanged">
+                  ,40,284,10" SelectionChanged="TasksDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />
@@ -26,15 +33,15 @@
                 <DataGridTextColumn Header="End date" Binding="{Binding EndDate, StringFormat=d}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
+        
         <TextBlock HorizontalAlignment="Left" Margin="1702,53,0,0" TextWrapping="Wrap" Text="Resource id" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1788,53,0,0" TextWrapping="Wrap" Text="Task id" VerticalAlignment="Top"/>
-        <TextBox x:Name="ResourceIdTextBox" HorizontalAlignment="Left" Margin="1720,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" Height="25"/>
-        <TextBox x:Name="TaskIdTextBox" HorizontalAlignment="Left" Margin="1793,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="25" Height="25"/>
-        <Button x:Name="AddResourceToTask" Content="Add resource to task" HorizontalAlignment="Left" Margin="1670,121,0,0" VerticalAlignment="Top" Height="60" Width="204" Click="OnAddResourceToTaskClick" Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="344,8,0,0" TextWrapping="Wrap" Text="Resource list" VerticalAlignment="Top" FontSize="24"/>
         <TextBlock HorizontalAlignment="Left" Margin="1185,8,0,0" TextWrapping="Wrap" Text="Task list" VerticalAlignment="Top" Width="106" FontSize="24"/>
+        
+        <TextBox x:Name="ResourceIdTextBox" HorizontalAlignment="Left" Margin="1723,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" Height="20"/>
+        <TextBox x:Name="TaskIdTextBox" HorizontalAlignment="Left" Margin="1796,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" Height="20"/>
+
+        <Button x:Name="AddResourceToTask" Content="Add resource to task" HorizontalAlignment="Left" Margin="1670,121,0,0" VerticalAlignment="Top" Height="60" Width="204" Click="OnAddResourceToTaskClick" FontSize="14" Style="{DynamicResource PrimaryButtonStyle}"/>
     </Grid>
 </Window>

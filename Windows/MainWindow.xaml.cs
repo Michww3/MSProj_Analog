@@ -31,7 +31,7 @@ namespace MSProj_Analog
             set { _fullTasks = value; OnPropertyChanged("FullTasks"); }
         }
 
-        public MainWindow(IAddResourceService addResourceService)
+        public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
@@ -53,11 +53,6 @@ namespace MSProj_Analog
             var addTaskWindow = new AddTaskWindow(Tasks);
             addTaskWindow.ShowDialog();
         }
-        private void OnCreateChartsClick(object sender, RoutedEventArgs e)
-        {
-            var chartWindow = new ChartWindow(FullTasks);
-            chartWindow.ShowDialog();
-        }
         private void OnAddResourceToTaskClick(object sender, RoutedEventArgs e)
         {
             var addResourceToTaskWindow = new AddResourceToTaskWindow(Resources, Tasks);
@@ -72,6 +67,15 @@ namespace MSProj_Analog
                 FullTasks = new ObservableCollection<ProjectTask>(updatedTasks);
             }
         }
-
+        private void OnCreateGanttChartClick(object sender, RoutedEventArgs e)
+        {
+            var chartWindow = new ChartWindow(FullTasks);
+            chartWindow.ShowDialog();
+        }
+        private void OnCreatePieChartClick(object sender, RoutedEventArgs e)
+        {
+            var pieChartWindow = new PieChartWindow(FullTasks);
+            pieChartWindow.ShowDialog();
+        }
     }
 }

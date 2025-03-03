@@ -1,0 +1,11 @@
+﻿<Window x:Class="MSProj_Analog.Windows.PieChartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Pie Chart Task Duration" Height="500" Width="500">
+    <Grid>
+        <lvc:PieChart Name="PieChart"
+                      LegendLocation="Right">
+        </lvc:PieChart>
+    </Grid>
+</Window>

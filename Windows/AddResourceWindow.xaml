@@ -1,7 +1,15 @@
-﻿<Window x:Class="MSProj_Analog.AddResourceWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:System="clr-namespace:System;assembly=System.Runtime" mc:Ignorable="av" x:Class="MSProj_Analog.AddResourceWindow"
         Title="Add Resource" Height="1080" Width="1920" WindowState ="Maximized">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Windows/Resources/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Margin="0,0,35,0">
         <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
@@ -14,18 +22,18 @@
         </DataGrid>
 
         <TextBox x:Name="ResourceNameTextBox" Width="100" Margin="800,150,10,0" VerticalAlignment="Top" Text="Art"/>
-        <TextBox x:Name="ResourceTypeTextBox" Width="100" Margin="800,200,10,0" VerticalAlignment="Top" Text="1"/>
         <TextBox x:Name="StandardRateTextBox" Width="100" Margin="800, 250, 10, 0" VerticalAlignment="Top" Text="10"/>
         <TextBox x:Name="OvertimeRateTextBox" Width="100" Margin="800, 300, 10, 0" VerticalAlignment="Top" Text="15"/>
 
-        <Button Content="Add resource" Width="134" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1270,360,0,0" Click="OnAddResourceClick" Background="#9a8e87"
-        Foreground="White"
-        FontFamily="Arial"
-        FontSize="20"/>
+        <Button Content="Add resource" Width="159" Height="62" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1270,360,0,0" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="1280,129,0,0" TextWrapping="Wrap" Text="Resource name" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1280,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Resource type"/>
         <TextBlock HorizontalAlignment="Left" Margin="1278,229,0,0" TextWrapping="Wrap" Text="Standart rate" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1278,279,0,0" TextWrapping="Wrap" Text="Overtime rate" VerticalAlignment="Top"/>
+        <ComboBox x:Name="ResourceTypeComboBox" HorizontalAlignment="Left" Margin="1288,202,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ComboBox_SelectionChanged">
+            <System:String>Material</System:String>
+            <System:String>Labor</System:String>
+        </ComboBox>
     </Grid>
 </Window>
