@@ -2,6 +2,7 @@
 {
     public static class ConfigOptions
     {
+        public const string Path = "C:\\Users\\User\\Desktop\\";
         public const string ConnectionString = "Server=W11PC\\SQLEXPRESS;Database=MsProjAnalogDB;Trusted_Connection=True;TrustServerCertificate=True;";
         public static class Messages
         {

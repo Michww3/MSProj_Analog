@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml;
+using System.Xml.Serialization;
 namespace MSProj_Analog.DTOs
 {
+    [Serializable]
     public class ProjectTask
     {
         public ProjectTask(string name, DateTime startDate, DateTime endDate)
@@ -9,33 +12,26 @@ namespace MSProj_Analog.DTOs
             Name = name;
             StartDate = startDate;
             EndDate = endDate;
-            //AssignedResource = new List<Resource>();
         }
 
-        private ProjectTask() 
-        {
-            //AssignedResource = new List<Resource>();
-        }
-        [Key]
+        public ProjectTask() 
+        { }
+        [Key,XmlAttribute]
         public int Id { get; set; }
 
-        [Required,MaxLength(30)]
-        public string Name { get; private set; }
+        [Required,MaxLength(30), XmlAttribute]
+        public string Name { get; set; }
 
-        [Required]
-        public DateTime StartDate { get; private set; }
+        [Required, XmlAttribute]
+        public DateTime StartDate { get; set; }
 
-        [Required]
-        public DateTime EndDate { get; private set; }
+        [Required, XmlAttribute]
+        public DateTime EndDate { get; set; }
 
-        [ForeignKey("ResourceId")]
+        [ForeignKey("ResourceId"),XmlIgnore]
         public Resource? Resource { get; set; }
+        [XmlIgnore]
         public int? ResourceId { get; set; }
 
-        //[Required]
-        //public List<Resource> AssignedResource { get; set; }
-
-        //public ProjectTask? PreviousTask { get; private set; }
-        //public ProjectTask? NextTask { get; private set; }
     }
 }

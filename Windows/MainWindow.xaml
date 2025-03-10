@@ -13,7 +13,7 @@
     </Window.Resources>
 
     <Grid>
-        <DataGrid ItemsSource="{Binding FullTasks}" AutoGenerateColumns="False" Margin="10,10,10,200">
+        <DataGrid ItemsSource="{Binding FullTasks}" AutoGenerateColumns="False" Margin="10,10,10,200" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Task Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, StringFormat=d}" Width="*"/>
@@ -22,11 +22,13 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="AddRecourceButton" Content="Add resource" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1532,10" Width="160" Height="100" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
-        <Button x:Name="AddTaskButton" Content="Add task" HorizontalAlignment="Left"  Margin="10,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
-        <Button x:Name="CreateGanttChart" Content="Create gantt chart" HorizontalAlignment="Left" Margin="712,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateGanttChartClick" Style="{DynamicResource PrimaryButtonStyle}"/>
-        <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="440,0,1262,10"  Height="100" Click="OnAddResourceToTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
-        <Button x:Name="CreatePieChartButton" Content="Create pie chart" HorizontalAlignment="Left" Margin="960,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="OnCreatePieChartClick"/>
+        <Button x:Name="AddRecourceButton" Content="Add resource" VerticalAlignment="Bottom" Margin="250,0,1532,10" Height="100" Click="OnAddResourceClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddTaskButton" Content="Add task"  Margin="50,0,0,10" VerticalAlignment="Bottom" Height="100" Click="OnAddTaskClick" Style="{DynamicResource PrimaryButtonStyle}" HorizontalAlignment="Left" Width="160"/>
+        <Button x:Name="CreateGanttChart" Content="Create gantt chart" HorizontalAlignment="Left" Margin="690,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Click="OnCreateGanttChartClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="AddResourceToTaskButton" Content="Add resource to task"  VerticalAlignment="Bottom" Margin="420,0,1262,10"  Height="100" Click="OnAddResourceToTaskClick" Style="{DynamicResource PrimaryButtonStyle}"/>
+        <Button x:Name="CreatePieChartButton" Content="Create pie chart" HorizontalAlignment="Left" Margin="880,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="OnCreatePieChartClick"/>
+        <Button x:Name="ImportDataButton" Content="Import data" HorizontalAlignment="Left" Margin="1080,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="ImportDataButton_Click"/>
+        <Button x:Name="ExportDataButton" Content="Export data" HorizontalAlignment="Left" Margin="1280,0,0,10" VerticalAlignment="Bottom" Height="100" Width="160" Style="{DynamicResource PrimaryButtonStyle}" Click="ExportDataButton_Click"/>
 
     </Grid>
 </Window>

@@ -17,7 +17,7 @@
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
         <lvc:PieChart Name="PieChart"
-                      LegendLocation="Right" Margin="0,60,0,0" Grid.ColumnSpan="2"/>
+                      LegendLocation="Right" Margin="0,60,0,0" Grid.ColumnSpan="2" FontSize="20"/>
         <Button x:Name="ExportToSVGButton" Content="Export to SVG" Margin="0,5,40,0" VerticalAlignment="Top" Style="{DynamicResource ResourceKey=PrimaryButtonStyle}" HorizontalAlignment="Right" Width="110" Click="ExportToSVGButton_Click" Height="43" />
         <Button x:Name="ExportToPDFButton" Content="Export to PDF" Margin="40,5,0,0" VerticalAlignment="Top" Style="{DynamicResource ResourceKey=PrimaryButtonStyle}" Click="ExportToPDFButton_Click" Height="43" Grid.Column="1" HorizontalAlignment="Left" Width="107"/>
     </Grid>

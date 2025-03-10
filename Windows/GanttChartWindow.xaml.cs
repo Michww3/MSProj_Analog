@@ -47,7 +47,6 @@ namespace MSProj_Analog.Windows
 
                 index++;
             }
-
             GanttChart.Series = SeriesCollection;
         }
 

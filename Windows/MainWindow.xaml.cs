@@ -1,9 +1,13 @@
 ﻿using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using MSProj_Analog.Windows;
+using MSProj_Analog.Config;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
+using System.Xml.Serialization;
+using System.Windows.Markup;
 
 namespace MSProj_Analog
 {
@@ -75,6 +79,41 @@ namespace MSProj_Analog
         {
             var pieChartWindow = new PieChartWindow(FullTasks);
             pieChartWindow.ShowDialog();
+        }
+
+        private void ImportDataButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExportDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            var path = ConfigOptions.Path;
+            ExportToXml<Resource>(Resources, $"{path}XmlExportResources.xml");
+            ExportToXml<ProjectTask>(Tasks, $"{path}XmlExportTasks.xml");
+            ExportToXml<ProjectTask>(FullTasks, $"{path}XmlExportFullTasks.xml");
+        }
+
+        public static void ExportToXml<T>(ICollection<T> collection, string filePath)
+        {
+            try
+            {
+                // Создаем сериализатор
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+                // Открываем файл для записи
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    // Сериализуем коллекцию в файл
+                    serializer.Serialize(writer, new List<T>(collection));
+                }
+
+                MessageBox.Show("Данные успешно экспортированы в XML!");
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Ошибка экспорта: {ex.Message}");
+            }
         }
     }
 }

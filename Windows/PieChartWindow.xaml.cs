@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MSProj_Analog.Config;
 
 namespace MSProj_Analog.Windows
 {
@@ -42,7 +43,7 @@ namespace MSProj_Analog.Windows
 
         private void ExportToPDFButton_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = "C:\\Users\\User\\Desktop\\PieChart.pdf";
+            string filePath = $"{ConfigOptions.Path}PieChart.pdf";
             ExportPieChartToPdf(filePath);
         }
 

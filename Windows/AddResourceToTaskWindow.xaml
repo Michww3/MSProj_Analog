@@ -14,8 +14,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,40
-                  ,1110,10" SelectionChanged="ResourcesDataGrid_SelectionChanged">
+        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,40,1110,10" SelectionChanged="ResourcesDataGrid_SelectionChanged" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Resource id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Resource Name" Binding="{Binding Name}" Width="*" />
@@ -24,8 +23,7 @@
                 <DataGridTextColumn Header="Overtime Rate" Binding="{Binding OvertimeRate, StringFormat=c}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="840
-                  ,40,284,10" SelectionChanged="TasksDataGrid_SelectionChanged">
+        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="840,40,284,10" SelectionChanged="TasksDataGrid_SelectionChanged" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />

@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged">
+        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />

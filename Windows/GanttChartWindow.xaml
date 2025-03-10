@@ -15,9 +15,9 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <lvc:CartesianChart x:Name="GanttChart">
+        <lvc:CartesianChart x:Name="GanttChart" FontSize="20">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Дата" LabelFormatter="{Binding DateFormatter}" />
+                <lvc:Axis Title="Дата" LabelFormatter="{Binding DateFormatter}" FontSize="20"/>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Задачи" Labels="{Binding TaskLabels}" />
