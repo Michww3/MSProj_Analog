@@ -5,7 +5,6 @@ using System.Xml.Serialization;
 
 namespace MSProj_Analog.DTOs
 {
-    [Serializable]
     public class Resource
     {
         public Resource(ResourceType resourceType, string name, decimal standardRate, decimal? overtimeRate = null)
@@ -18,25 +17,22 @@ namespace MSProj_Analog.DTOs
 
         public Resource() { }
 
-        [Key, XmlAttribute]
+        [Key]
         public int Id { get; set; }
 
-        [Required,MaxLength(30), XmlAttribute]
+        [Required,MaxLength(30)]
         public string Name { get; set; }
 
-        [Required, XmlAttribute]
+        [Required]
         public decimal StandardRate { get; set; }
 
-        [XmlElement]
         public decimal? OvertimeRate { get; set; }
 
-        [Required, XmlAttribute]
+        [Required]
         public ResourceType Type { get; set; }
 
-        [ForeignKey("ProjectTaskId"), XmlIgnore]
+        [ForeignKey("ProjectTaskId")]
         public ProjectTask? ProjectTask { get; set; }
-
-        [XmlIgnore]
         public int? ProjectTaskId { get; set; }
 
         public override string ToString()

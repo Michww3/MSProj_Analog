@@ -17,6 +17,7 @@ namespace MSProj_Analog
 
         public ObservableCollection<ProjectTask> Tasks { get; set; }
         new public ObservableCollection<Resource> Resources { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public AddResourceToTaskWindow(ObservableCollection<Resource> resources, ObservableCollection<ProjectTask> tasks)
         {
@@ -25,6 +26,7 @@ namespace MSProj_Analog
             Tasks = tasks;
             DataContext = this;
         }
+
         public void OnAddResourceToTaskClick(object sender, RoutedEventArgs e)
         {
             int resourceId;
@@ -45,7 +47,6 @@ namespace MSProj_Analog
 
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -21,6 +21,8 @@ namespace MSProj_Analog
             set { _tasks = value; OnPropertyChanged("Tasks"); }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public AddTaskWindow(ObservableCollection<ProjectTask> tasks)
         {
             InitializeComponent();
@@ -44,7 +46,6 @@ namespace MSProj_Analog
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

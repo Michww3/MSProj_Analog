@@ -1,12 +1,9 @@
-﻿using MSProj_Analog.Config;
-using MSProj_Analog.DTOs;
+﻿using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
 using MSProj_Analog.Windows;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
-using System.Xml.Linq;
 
 namespace MSProj_Analog
 {
@@ -32,6 +29,7 @@ namespace MSProj_Analog
             get { return _fullTasks; }
             set { _fullTasks = value; OnPropertyChanged("FullTasks"); }
         }
+
 
         public MainWindow()
         {
@@ -73,6 +71,12 @@ namespace MSProj_Analog
             }
         }
 
+        private void ViewDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            var viewDataWindow = new ViewDataWindow();
+            viewDataWindow.ShowDialog();
+        }
+
         private void OnCreateGanttChartClick(object sender, RoutedEventArgs e)
         {
             var chartWindow = new GanttChartWindow(FullTasks);
@@ -83,71 +87,6 @@ namespace MSProj_Analog
         {
             var pieChartWindow = new PieChartWindow(FullTasks);
             pieChartWindow.ShowDialog();
-        }
-
-        private void ImportDataButton_Click(object sender, RoutedEventArgs e)
-        {
-            Test(FullTasks);
-        }
-
-        private void ExportDataButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            ExportAllToXml(Resources, Tasks, FullTasks, ConfigOptions.Path + "Export\\", $"DataExport_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.xml");
-        }
-
- 
-        public static void ExportAllToXml(IEnumerable<Resource> resources,IEnumerable<ProjectTask> tasks,IEnumerable<ProjectTask> fullTasks,string directoryPath,string fileName = "CombinedExport.xml")
-        {
-            
-                var xml = new XElement("ExportData",
-                    new XElement("Resources",
-                        from resource in resources
-                        select new XElement("Resource",
-                            new XAttribute("Id", resource.Id),
-                            new XAttribute("Name", resource.Name),
-                            new XAttribute("StandardRate", resource.StandardRate),
-                            resource.OvertimeRate.HasValue ? new XAttribute("OvertimeRate", resource.OvertimeRate.Value) : null,
-                            new XAttribute("Type", resource.Type.ToString())
-                        )
-                    ),
-                    new XElement("Tasks",
-                        from task in tasks
-                        select new XElement("Task",
-                            new XAttribute("Id", task.Id),
-                            new XAttribute("Name", task.Name),
-                            new XAttribute("StartDate", task.StartDate.ToString("yyyy-MM-dd")),
-                            new XAttribute("EndDate", task.EndDate.ToString("yyyy-MM-dd"))
-                        )
-                    ),
-                    new XElement("FullTasks",
-                        from task in fullTasks
-                        select new XElement("Task",
-                            new XAttribute("Id", task.Id),
-                            new XAttribute("Name", task.Name),
-                            new XAttribute("StartDate", task.StartDate.ToString("yyyy-MM-dd")),
-                            new XAttribute("EndDate", task.EndDate.ToString("yyyy-MM-dd")),
-                            new XAttribute("AssignedResourceId", task.ResourceId ?? throw new ArgumentNullException(nameof(task.ResourceId)))
-                        )
-                    )
-                );
-
-            xml.Save(Path.Combine(directoryPath, fileName));
-        }
-
-        public void Test(ICollection<ProjectTask> fullTask)
-        {
-            foreach (var task in fullTask)
-            {
-                if (task.Resource != null) // Проверяем, есть ли связанный ресурс
-                {
-                    MessageBox.Show($"Задача: {task.Name}, Ставка ресурса: {task.Resource.StandardRate}");
-                }
-                else
-                {
-                    MessageBox.Show($"Задача: {task.Name} не имеет связанного ресурса.");
-                }
-            }
         }
 
     }

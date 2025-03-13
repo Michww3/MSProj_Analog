@@ -1,0 +1,41 @@
+﻿<Window x:Class="MSProj_Analog.Windows.ViewDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MSProj_Analog.Windows"
+        mc:Ignorable="d"
+        Title="ViewDataWindow" Height="1080" Width="1920" WindowState="Maximized">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Windows/Resources/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,0,10" CanUserAddRows="False" HorizontalAlignment="Left" Width="805" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Resource id" Binding="{Binding Id}" Width="*" />
+                <DataGridTextColumn Header="Resource Name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Resource Type" Binding="{Binding Type}" Width="*" />
+                <DataGridTextColumn Header="Standard Rate" Binding="{Binding StandardRate, StringFormat=c}" Width="*" />
+                <DataGridTextColumn Header="Overtime Rate" Binding="{Binding OvertimeRate, StringFormat=c}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="0,10,150,10"  CanUserAddRows="False" HorizontalAlignment="Right" Width="950">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
+                <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />
+                <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat=d}" Width="*" />
+                <DataGridTextColumn Header="End date" Binding="{Binding EndDate, StringFormat=d}" Width="*" />
+                <DataGridTextColumn Header="Assigned resource id" Binding="{Binding ResourceId, StringFormat=d}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="ImportDataButton" Content="Import data" HorizontalAlignment="Left" Margin="1810,0,0,949" VerticalAlignment="Bottom" Height="40" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ImportDataButton_Click"/>
+        <Button x:Name="ExportDataButton" Content="Export data" HorizontalAlignment="Left" Margin="1810,0,0,1014" VerticalAlignment="Bottom" Height="40" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ExportDataButton_Click"/>
+    </Grid>
+
+</Window>

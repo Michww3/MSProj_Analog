@@ -4,7 +4,6 @@ using System.Xml;
 using System.Xml.Serialization;
 namespace MSProj_Analog.DTOs
 {
-    [Serializable]
     public class ProjectTask
     {
         public ProjectTask(string name, DateTime startDate, DateTime endDate)
@@ -14,23 +13,22 @@ namespace MSProj_Analog.DTOs
             EndDate = endDate;
         }
 
-        public ProjectTask() 
+        public ProjectTask()
         { }
-        [Key,XmlAttribute]
+        [Key, XmlAttribute]
         public int Id { get; set; }
 
-        [Required,MaxLength(30), XmlAttribute]
+        [Required, MaxLength(30)]
         public string Name { get; set; }
 
-        [Required, XmlAttribute]
+        [Required]
         public DateTime StartDate { get; set; }
 
-        [Required, XmlAttribute]
+        [Required]
         public DateTime EndDate { get; set; }
 
-        [ForeignKey("ResourceId"),XmlIgnore]
+        [ForeignKey("ResourceId")]
         public Resource? Resource { get; set; }
-        [XmlIgnore]
         public int? ResourceId { get; set; }
 
     }

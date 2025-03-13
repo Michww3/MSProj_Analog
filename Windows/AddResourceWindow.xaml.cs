@@ -22,6 +22,8 @@ namespace MSProj_Analog
             set { _resources = value; OnPropertyChanged("Resources"); }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public AddResourceWindow(ObservableCollection<Resource> resources)
         {
             InitializeComponent();
@@ -54,7 +56,6 @@ namespace MSProj_Analog
             addResourceService.AddResource(new AppDbContext(),Resources,newResource);
 
         }
-        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
