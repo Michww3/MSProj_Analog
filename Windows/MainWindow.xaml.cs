@@ -30,6 +30,7 @@ namespace MSProj_Analog
             set { _fullTasks = value; OnPropertyChanged("FullTasks"); }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow()
         {
@@ -37,7 +38,6 @@ namespace MSProj_Analog
             DataContext = this;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

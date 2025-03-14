@@ -1,6 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using Microsoft.Win32;
 using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Helpers;
@@ -47,10 +48,23 @@ namespace MSProj_Analog.Windows
             GanttChart.Series = SeriesCollection;
         }
 
+
         private void ExportToPDFButton_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = ConfigOptions.Path+"GantChart.pdf";
-            ExportChart.ExportChartToPdf(filePath,GanttChart);
+            var saveFileDialog = new SaveFileDialog
+            {
+                Title = "Сохранить диаграмму Ганта как PDF",
+                Filter = "PDF файлы (*.pdf)|*.pdf", // Ограничение выбора PDF-файлами
+                DefaultExt = "pdf",
+                FileName = "GanttChart.pdf", // Стандартное имя файла
+                InitialDirectory = ConfigOptions.Path // Начальная папка для сохранения
+            };
+
+            if (saveFileDialog.ShowDialog() == true) // Открываем диалоговое окно
+            {
+                ExportChart.ExportChartToPdf(saveFileDialog.FileName, GanttChart);
+                MessageBox.Show("Экспорт завершен!", "Экспорт в PDF", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void ExportToSVGButton_Click(object sender, RoutedEventArgs e)

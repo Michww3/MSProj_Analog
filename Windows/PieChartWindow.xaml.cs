@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MSProj_Analog.Config;
 using MSProj_Analog.Helpers;
+using Microsoft.Win32;
 
 namespace MSProj_Analog.Windows
 {
@@ -42,11 +43,25 @@ namespace MSProj_Analog.Windows
             PieChart.Series = SeriesCollection;
         }
 
+
         private void ExportToPDFButton_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = $"{ConfigOptions.Path}PieChart.pdf";
-            ExportChart.ExportChartToPdf(filePath, PieChart);
+            var saveFileDialog = new SaveFileDialog
+            {
+                Title = "Сохранить круговую диаграмму как PDF",
+                Filter = "PDF файлы (*.pdf)|*.pdf", // Ограничение выбора PDF-файлами
+                DefaultExt = "pdf",
+                FileName = "PieChart.pdf", // Стандартное имя файла
+                InitialDirectory = ConfigOptions.Path // Начальная папка для сохранения
+            };
+
+            if (saveFileDialog.ShowDialog() == true) // Открываем диалоговое окно
+            {
+                ExportChart.ExportChartToPdf(saveFileDialog.FileName, PieChart);
+                MessageBox.Show("Экспорт завершен!", "Экспорт в PDF", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
+
 
         private void ExportToSVGButton_Click(object sender, RoutedEventArgs e)
         {

@@ -16,16 +16,17 @@
     </Window.Resources>
 
     <Grid>
-        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,0,10" CanUserAddRows="False" HorizontalAlignment="Left" Width="805" >
+        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,0,10" CanUserAddRows="False" HorizontalAlignment="Left" Width="850" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Resource id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Resource Name" Binding="{Binding Name}" Width="*" />
                 <DataGridTextColumn Header="Resource Type" Binding="{Binding Type}" Width="*" />
                 <DataGridTextColumn Header="Standard Rate" Binding="{Binding StandardRate, StringFormat=c}" Width="*" />
                 <DataGridTextColumn Header="Overtime Rate" Binding="{Binding OvertimeRate, StringFormat=c}" Width="*" />
+                <DataGridTextColumn Header="Assigned Task Id" Binding="{Binding ProjectTaskId}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="0,10,150,10"  CanUserAddRows="False" HorizontalAlignment="Right" Width="950">
+        <DataGrid ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" Margin="900,10,0,10"  CanUserAddRows="False" HorizontalAlignment="Left" Width="876">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Task name" Binding="{Binding Name}" Width="*" />
@@ -36,6 +37,7 @@
         </DataGrid>
         <Button x:Name="ImportDataButton" Content="Import data" HorizontalAlignment="Left" Margin="1810,0,0,949" VerticalAlignment="Bottom" Height="40" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ImportDataButton_Click"/>
         <Button x:Name="ExportDataButton" Content="Export data" HorizontalAlignment="Left" Margin="1810,0,0,1014" VerticalAlignment="Bottom" Height="40" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ExportDataButton_Click"/>
+
     </Grid>
 
 </Window>

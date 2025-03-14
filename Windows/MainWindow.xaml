@@ -19,7 +19,6 @@
                 <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate, StringFormat=d}" Width="*"/>
                 <DataGridTextColumn Header="End Date" Binding="{Binding EndDate, StringFormat=d}" Width="*"/>
                 <DataGridTextColumn Header="Assigned Resource Id" Binding="{Binding ResourceId}" Width="*"/>
-                <!--<DataGridTextColumn Header="Test" Binding="{Binding Resource}" Width="*"/>-->
             </DataGrid.Columns>
         </DataGrid>
 

@@ -25,7 +25,7 @@ namespace MSProj_Analog.Helpers
                 XGraphics gfx = XGraphics.FromPdfPage(page);
 
                 // Устанавливаем размер для рендеринга диаграммы
-                var renderSize = new System.Windows.Size(page.Width, page.Height);
+                var renderSize = new Size(page.Width, page.Height);
 
                 // Создаем RenderTarget для рисования диаграммы
                 var renderTarget = new RenderTargetBitmap(
@@ -34,7 +34,7 @@ namespace MSProj_Analog.Helpers
 
                 // Рисуем диаграмму в RenderTarget
                 chart.Measure(renderSize);
-                chart.Arrange(new System.Windows.Rect(0, 0, renderSize.Width, renderSize.Height));
+                chart.Arrange(new Rect(0, 0, renderSize.Width, renderSize.Height));
                 renderTarget.Render(chart);
 
                 // Сохраняем изображение в MemoryStream

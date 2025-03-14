@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Enums;
 using MSProj_Analog.Helpers;
 using MSProj_Analog.Interfaces;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Xml.Linq;
@@ -16,31 +20,32 @@ namespace MSProj_Analog.Windows
         IInitializeResourceService initializeMainWindowResourceService = App.Services.GetRequiredService<IInitializeResourceService>();
         MainWindow mainWindow = App.Services.GetRequiredService<MainWindow>();
 
-        private ICollection<ProjectTask> _tasks;
-        public ICollection<ProjectTask> Tasks
+        private ObservableCollection<ProjectTask> _tasks;
+        public ObservableCollection<ProjectTask> Tasks
         {
             get { return _tasks; }
             set { _tasks = value; }
         }
-        private ICollection<Resource> resources;
-        new public ICollection<Resource> Resources
+        private ObservableCollection<Resource> resources;
+        new public ObservableCollection<Resource> Resources
         {
             get { return resources; }
             set { resources = value; }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ViewDataWindow()
         {
             InitializeComponent();
             using (var context = new AppDbContext())
             {
-                Tasks = context.Tasks.ToList<ProjectTask>();
-                Resources = context.Resources.ToList<Resource>();
+                Tasks = new ObservableCollection<ProjectTask>(context.Tasks.ToList<ProjectTask>());
+                Resources = new ObservableCollection<Resource>(context.Resources.ToList<Resource>());
             }
             DataContext = this;
 
         }
-
 
         public static void ExportAllToXml(ICollection<Resource> resources, ICollection<ProjectTask> tasks, string directoryPath, string fileName = "CombinedExport.xml")
         {
@@ -77,36 +82,104 @@ namespace MSProj_Analog.Windows
 
             var resources = xmlDoc.Descendants("Resource").Select(x => new Resource
             {
+                Id = (int)x.Attribute("Id"),
                 Name = (string)x.Attribute("Name"),
                 StandardRate = (decimal)x.Attribute("StandardRate"),
                 OvertimeRate = (decimal?)x.Attribute("OvertimeRate"),
                 Type = Enum.Parse<ResourceType>((string)x.Attribute("Type")),
-                ProjectTaskId = (int?)x.Attribute("AppointedTaskId")
             }).ToList();
 
             var tasks = xmlDoc.Descendants("Task").Select(x => new ProjectTask
             {
+                Id = (int)x.Attribute("Id"),
                 Name = (string)x.Attribute("Name"),
                 StartDate = (DateTime)x.Attribute("StartDate"),
                 EndDate = (DateTime)x.Attribute("EndDate"),
                 ResourceId = (int?)x.Attribute("ResourceId")
             }).ToList();
 
+            //expilicit insertion id for add resource to task
+            using var transaction = context.Database.BeginTransaction(); // for check correct explicit insertion of Id
+
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Resources ON");
             context.Resources.AddRange(resources);
+            context.SaveChanges();
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Resources OFF");
+
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Tasks ON");
             context.Tasks.AddRange(tasks);
             context.SaveChanges();
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Tasks OFF");
+
+            transaction.Commit();
+
+            var tasksWithResources = context.Tasks.Where(t => t.ResourceId != null).ToList(); // Загружаем все задачи в память(Entity have 1 DataReader)
+
+            foreach (var task in tasksWithResources)
+            {
+                var resource = context.Resources.SingleOrDefault(r => r.Id == task.ResourceId);
+                resource.ProjectTask = task;
+                context.SaveChanges();
+            }
+
+            Resources.Clear();
+            foreach (var resource in resources)
+            {
+                Resources.Add(resource);
+            }
+
+            Tasks.Clear();
+            foreach (var task in tasks)
+            {
+                Tasks.Add(task);
+            }
             initializeMainWindowResourceService.InitializeResource(mainWindow);
         }
 
         private void ExportDataButton_Click(object sender, RoutedEventArgs e)
         {
-            ExportAllToXml(Resources, Tasks, ConfigOptions.Path+"Export\\");
+            var saveFileDialog = new SaveFileDialog
+            {
+                Title = "Выберите место для сохранения",
+                Filter = "XML файлы (*.xml)|*.xml",
+                DefaultExt = "xml",
+                FileName = "ExportData.xml",
+                InitialDirectory = ConfigOptions.Path + "Export\\"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                ExportAllToXml(Resources, Tasks, Path.GetDirectoryName(saveFileDialog.FileName), Path.GetFileName(saveFileDialog.FileName));
+                MessageBox.Show("Данные успешно экспортированы!", "Экспорт", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
+
 
         private void ImportDataButton_Click(object sender, RoutedEventArgs e)
         {
-            ImportDataFromXml(ConfigOptions.Path + "Export\\" + "CombinedExport.xml", new AppDbContext());
+            var openFileDialog = new OpenFileDialog
+            {
+                Title = "Выберите XML-файл для импорта",
+                Filter = "XML файлы (*.xml)|*.xml",
+                DefaultExt = "xml",
+                InitialDirectory = ConfigOptions.Path + "Export\\"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                using (var context = new AppDbContext())
+                {
+                    ImportDataFromXml(openFileDialog.FileName, context);
+                }
+
+                MessageBox.Show("Импорт завершен!", "Импорт данных", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
