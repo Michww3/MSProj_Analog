@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Xml;
-using System.Xml.Serialization;
+
 namespace MSProj_Analog.DTOs
 {
     public class ProjectTask
@@ -15,7 +14,7 @@ namespace MSProj_Analog.DTOs
 
         public ProjectTask()
         { }
-        [Key, XmlAttribute]
+        [Key]
         public int Id { get; set; }
 
         [Required, MaxLength(30)]

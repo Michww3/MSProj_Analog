@@ -1,7 +1,6 @@
 ﻿using MSProj_Analog.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Xml.Serialization;
 
 namespace MSProj_Analog.DTOs
 {

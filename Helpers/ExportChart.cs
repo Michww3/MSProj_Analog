@@ -1,14 +1,9 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace MSProj_Analog.Helpers
 {
@@ -51,6 +46,7 @@ namespace MSProj_Analog.Helpers
                     XImage xImage = XImage.FromStream(memoryStream); // Теперь передаем поток напрямую
 
                     gfx.DrawImage(xImage, 0, 0);
+                    gfx.Dispose();
                 }
 
                 // Сохраняем PDF файл

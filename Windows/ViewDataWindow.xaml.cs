@@ -19,7 +19,6 @@ namespace MSProj_Analog.Windows
     {
         IInitializeResourceService initializeMainWindowResourceService = App.Services.GetRequiredService<IInitializeResourceService>();
         MainWindow mainWindow = App.Services.GetRequiredService<MainWindow>();
-
         private ObservableCollection<ProjectTask> _tasks;
         public ObservableCollection<ProjectTask> Tasks
         {
@@ -79,7 +78,6 @@ namespace MSProj_Analog.Windows
         public void ImportDataFromXml(string xmlPath, AppDbContext context)
         {
             var xmlDoc = XDocument.Load(xmlPath);
-
             var resources = xmlDoc.Descendants("Resource").Select(x => new Resource
             {
                 Id = (int)x.Attribute("Id"),
@@ -113,7 +111,7 @@ namespace MSProj_Analog.Windows
 
             transaction.Commit();
 
-            var tasksWithResources = context.Tasks.Where(t => t.ResourceId != null).ToList(); // Загружаем все задачи в память(Entity have 1 DataReader)
+            var tasksWithResources = context.Tasks.Where(t => t.ResourceId != null).ToList(); // Загружаем все задачи в память(EntityFW have 1 DataReader)
 
             foreach (var task in tasksWithResources)
             {
@@ -134,18 +132,13 @@ namespace MSProj_Analog.Windows
                 Tasks.Add(task);
             }
             initializeMainWindowResourceService.InitializeResource(mainWindow);
+
+            MessageBox.Show("Импорт завершен!", "Импорт данных", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void ExportDataButton_Click(object sender, RoutedEventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog
-            {
-                Title = "Выберите место для сохранения",
-                Filter = "XML файлы (*.xml)|*.xml",
-                DefaultExt = "xml",
-                FileName = "ExportData.xml",
-                InitialDirectory = ConfigOptions.Path + "Export\\"
-            };
+            var saveFileDialog = ConfigOptions.Export("Выберите место для сохранения", "XML файлы (*.xml)|*.xml", "xml", "ExportData.xml", ConfigOptions.Path + "Export\\");
 
             if (saveFileDialog.ShowDialog() == true)
             {
@@ -164,15 +157,21 @@ namespace MSProj_Analog.Windows
                 DefaultExt = "xml",
                 InitialDirectory = ConfigOptions.Path + "Export\\"
             };
+            var saveFileDialog = ConfigOptions.Import("Выберите XML-файл для импорта", "XML файлы (*.xml)|*.xml", "xml", ConfigOptions.Path + "Export\\");
 
             if (openFileDialog.ShowDialog() == true)
             {
-                using (var context = new AppDbContext())
+                try
                 {
-                    ImportDataFromXml(openFileDialog.FileName, context);
+                    using (var context = new AppDbContext())
+                    {
+                        ImportDataFromXml(openFileDialog.FileName, context);
+                    }
                 }
-
-                MessageBox.Show("Импорт завершен!", "Импорт данных", MessageBoxButton.OK, MessageBoxImage.Information);
+                catch (Exception ex) when (ex is NullReferenceException || ex is InvalidOperationException || ex is DbUpdateException)
+                {
+                    MessageBox.Show("Corrupted xml file");
+                }
             }
         }
 

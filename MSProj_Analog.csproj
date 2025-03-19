@@ -21,13 +21,16 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.2" />
+    <PackageReference Include="PdfiumViewer" Version="2.13.0" />
     <PackageReference Include="PdfSharp" Version="6.1.1" />
+    <PackageReference Include="PdfToSvg.NET" Version="1.6.0" />
     <PackageReference Include="SharpVectors" Version="1.8.4.2" />
     <PackageReference Include="SharpVectors.Reloaded" Version="1.8.4.2" />
-    <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.7.4" />
     <PackageReference Include="SkiaSharp" Version="3.116.1" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Views.WPF" Version="3.116.1" />
+    <PackageReference Include="Svg" Version="3.4.7" />
   </ItemGroup>
 
   <ItemGroup>
