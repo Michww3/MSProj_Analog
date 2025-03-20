@@ -37,13 +37,16 @@ namespace MSProj_Analog.Windows
             {
                 var start = task.StartDate.Ticks;
                 var end = task.EndDate.Ticks;
-                var duration = end - start;
+
+                // Берем цвет из коллекции, используя индекс по модулю
+                var taskColor = ConfigOptions.chartColors[index % ConfigOptions.chartColors.Count];
 
                 SeriesCollection.Add(new RowSeries
                 {
                     Title = task.Name,
                     Values = new ChartValues<GanttPoint> { new GanttPoint(start, end) },
-                    DataLabels = true
+                    DataLabels = true,
+                    Fill = new SolidColorBrush(taskColor) // Применяем цвет
                 });
 
                 index++;
@@ -58,7 +61,7 @@ namespace MSProj_Analog.Windows
             if (saveFileDialog.ShowDialog() == true)
             {
                 ExportChart.ExportChartToPdf(saveFileDialog.FileName, GanttChart);
-                MessageBox.Show("Экспорт завершен!", "Экспорт в PDF", MessageBoxButton.OK, MessageBoxImage.Information);
+                ConfigOptions.MessageBoxExport("Pdf export");
             }
         }
 
@@ -69,7 +72,7 @@ namespace MSProj_Analog.Windows
             if (saveFileDialog.ShowDialog() == true)
             {
                 ExportChartToSvg(saveFileDialog.FileName);
-                MessageBox.Show("Экспорт завершен!", "Экспорт в SVG", MessageBoxButton.OK, MessageBoxImage.Information);
+                ConfigOptions.MessageBoxExport("Svg export");
             }
         }
 
@@ -81,13 +84,15 @@ namespace MSProj_Analog.Windows
             // Размеры диаграммы
             var width = (int)GanttChart.ActualWidth;
             var height = (int)GanttChart.ActualHeight;
-            var barHeight = 30; // Высота одной задачи
-            var padding = 10;
+            var barHeight = 60; // Высота одной задачи
+            var padding = 5;
+            var axisHeight = 40; // Высота оси времени
+            var gridLinesCount = 10; // Количество линий сетки на оси времени
 
             var svgDoc = new SvgDocument
             {
                 Width = width,
-                Height = height
+                Height = height + axisHeight
             };
 
             // Определяем минимальную и максимальную дату
@@ -104,8 +109,10 @@ namespace MSProj_Analog.Windows
                 double barWidth = ((ganttPoint.EndPoint - ganttPoint.StartPoint) / dateRange) * (width - 2 * padding);
                 double y = padding + index * (barHeight + padding);
 
-                var random = new Random();
-                var fillColor = System.Drawing.Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+                // Используем цвет из коллекции, связанный с текущим индексом
+                var wpfColor = ConfigOptions.chartColors[index % ConfigOptions.chartColors.Count];
+                var fillColor = System.Drawing.Color.FromArgb(wpfColor.R, wpfColor.G, wpfColor.B);
+
 
                 // Добавляем прямоугольник (задачу)
                 var rect = new SvgRectangle
@@ -114,7 +121,7 @@ namespace MSProj_Analog.Windows
                     Y = new SvgUnit((float)y),
                     Width = new SvgUnit((float)barWidth),
                     Height = new SvgUnit((float)barHeight),
-                    Fill = new SvgColourServer(fillColor),
+                    Fill = new SvgColourServer(fillColor),  // Применяем цвет задачи
                     Stroke = new SvgColourServer(System.Drawing.Color.Black),
                     StrokeWidth = 1
                 };
@@ -123,14 +130,61 @@ namespace MSProj_Analog.Windows
                 // Добавляем текст (название задачи)
                 var text = new SvgText(series.Title)
                 {
-                    X = new SvgUnitCollection { new SvgUnit((float)(startX + 5)) }, // Указываем X как коллекцию
-                    Y = new SvgUnitCollection { new SvgUnit((float)(y + barHeight / 2)) }, // Указываем Y как коллекцию
+                    X = new SvgUnitCollection { new SvgUnit((float)(startX + 5)) },
+                    Y = new SvgUnitCollection { new SvgUnit((float)(y + barHeight / 2)) },
                     Fill = new SvgColourServer(System.Drawing.Color.Black),
                     FontSize = new SvgUnit(14)
                 };
                 svgDoc.Children.Add(text);
 
                 index++;
+            }
+
+            // Добавляем ось времени внизу диаграммы
+            double axisY = height + padding; // Позиция оси X
+
+            // Линия оси
+            var axisLine = new SvgLine
+            {
+                StartX = new SvgUnit(padding),
+                StartY = new SvgUnit((float)axisY),
+                EndX = new SvgUnit(width - padding),
+                EndY = new SvgUnit((float)axisY),
+                Stroke = new SvgColourServer(System.Drawing.Color.Black),
+                StrokeWidth = 2
+            };
+            svgDoc.Children.Add(axisLine);
+
+            // Добавляем метки дат и вертикальные линии сетки
+            for (int i = 0; i <= gridLinesCount; i++)
+            {
+                double xPos = padding + (i / (double)gridLinesCount) * (width - 2 * padding);
+                double dateValue = minDate + (i / (double)gridLinesCount) * dateRange;
+                DateTime date = new DateTime((long)dateValue);
+
+                // Вертикальная линия сетки
+                var gridLine = new SvgLine
+                {
+                    StartX = new SvgUnit((float)xPos),
+                    StartY = new SvgUnit(padding),
+                    EndX = new SvgUnit((float)xPos),
+                    EndY = new SvgUnit((float)axisY),
+                    Stroke = new SvgColourServer(System.Drawing.Color.Gray),
+                    StrokeWidth = 1,
+                    StrokeDashArray = new SvgUnitCollection { new SvgUnit(4), new SvgUnit(4) } // Пунктирная линия
+                };
+                svgDoc.Children.Add(gridLine);
+
+                // Текст с датой
+                var dateText = new SvgText(date.ToString("dd.MM.yyyy"))
+                {
+                    X = new SvgUnitCollection { new SvgUnit((float)xPos) },
+                    Y = new SvgUnitCollection { new SvgUnit((float)(axisY + 20)) },
+                    Fill = new SvgColourServer(System.Drawing.Color.Black),
+                    FontSize = new SvgUnit(12),
+                    TextAnchor = SvgTextAnchor.Middle
+                };
+                svgDoc.Children.Add(dateText);
             }
 
             // Сохраняем SVG в файл

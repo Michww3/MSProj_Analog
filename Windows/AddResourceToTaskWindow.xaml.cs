@@ -17,7 +17,7 @@ namespace MSProj_Analog
 
         public ObservableCollection<ProjectTask> Tasks { get; set; }
         new public ObservableCollection<Resource> Resources { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public AddResourceToTaskWindow(ObservableCollection<Resource> resources, ObservableCollection<ProjectTask> tasks)
         {
@@ -67,6 +67,5 @@ namespace MSProj_Analog
                 TaskIdTextBox.Text = selectedTask.Id.ToString();
             }
         }
-
     }
 }

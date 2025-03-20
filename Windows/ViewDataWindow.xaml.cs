@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
 using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Enums;
@@ -10,7 +9,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
+using System.Xml;
 using System.Xml.Linq;
+
 
 namespace MSProj_Analog.Windows
 {
@@ -19,12 +20,14 @@ namespace MSProj_Analog.Windows
     {
         IInitializeResourceService initializeMainWindowResourceService = App.Services.GetRequiredService<IInitializeResourceService>();
         MainWindow mainWindow = App.Services.GetRequiredService<MainWindow>();
+
         private ObservableCollection<ProjectTask> _tasks;
         public ObservableCollection<ProjectTask> Tasks
         {
             get { return _tasks; }
             set { _tasks = value; }
         }
+
         private ObservableCollection<Resource> resources;
         new public ObservableCollection<Resource> Resources
         {
@@ -46,7 +49,7 @@ namespace MSProj_Analog.Windows
 
         }
 
-        public static void ExportAllToXml(ICollection<Resource> resources, ICollection<ProjectTask> tasks, string directoryPath, string fileName = "CombinedExport.xml")
+        public static void ExportDataToXml(ICollection<Resource> resources, ICollection<ProjectTask> tasks, string directoryPath, string fileName = "CombinedExport.xml")
         {
             var xml = new XElement("ExportData",
                 new XElement("Resources",
@@ -116,6 +119,8 @@ namespace MSProj_Analog.Windows
             foreach (var task in tasksWithResources)
             {
                 var resource = context.Resources.SingleOrDefault(r => r.Id == task.ResourceId);
+                if (resource == null)
+                    throw new NullReferenceException($"Resource with id: {task.ResourceId} not found");
                 resource.ProjectTask = task;
                 context.SaveChanges();
             }
@@ -133,7 +138,7 @@ namespace MSProj_Analog.Windows
             }
             initializeMainWindowResourceService.InitializeResource(mainWindow);
 
-            MessageBox.Show("Импорт завершен!", "Импорт данных", MessageBoxButton.OK, MessageBoxImage.Information);
+            ConfigOptions.MessageBoxInfo("Импорт завершен!", "Импорт");
         }
 
         private void ExportDataButton_Click(object sender, RoutedEventArgs e)
@@ -142,22 +147,14 @@ namespace MSProj_Analog.Windows
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                ExportAllToXml(Resources, Tasks, Path.GetDirectoryName(saveFileDialog.FileName), Path.GetFileName(saveFileDialog.FileName));
-                MessageBox.Show("Данные успешно экспортированы!", "Экспорт", MessageBoxButton.OK, MessageBoxImage.Information);
+                ExportDataToXml(Resources, Tasks, Path.GetDirectoryName(saveFileDialog.FileName), Path.GetFileName(saveFileDialog.FileName));
+                ConfigOptions.MessageBoxExport("Xml экспорт");
             }
         }
 
-
         private void ImportDataButton_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog
-            {
-                Title = "Выберите XML-файл для импорта",
-                Filter = "XML файлы (*.xml)|*.xml",
-                DefaultExt = "xml",
-                InitialDirectory = ConfigOptions.Path + "Export\\"
-            };
-            var saveFileDialog = ConfigOptions.Import("Выберите XML-файл для импорта", "XML файлы (*.xml)|*.xml", "xml", ConfigOptions.Path + "Export\\");
+            var openFileDialog = ConfigOptions.Import("Выберите XML-файл для импорта", "XML файлы (*.xml)|*.xml", "xml", ConfigOptions.Path + "Export\\");
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -168,14 +165,20 @@ namespace MSProj_Analog.Windows
                         ImportDataFromXml(openFileDialog.FileName, context);
                     }
                 }
-                catch (Exception ex) when (ex is NullReferenceException || ex is InvalidOperationException || ex is DbUpdateException)
+                catch (Exception ex) when (ex is NullReferenceException || ex is InvalidOperationException || ex is ArgumentNullException)
                 {
-                    MessageBox.Show("Corrupted xml file");
+                    ConfigOptions.MessageBoxError("Data in xml file are corrupted", "Corrupted xml");
+                }
+                catch (DbUpdateException)
+                {
+                    ConfigOptions.MessageBoxError("Db already have data with the same id or xml file are corrupted", "Db update error");
+                }
+                catch(XmlException ex)
+                {
+                    ConfigOptions.MessageBoxError("Xml file error: " + ex.Message, "File error");
                 }
             }
         }
-
-
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

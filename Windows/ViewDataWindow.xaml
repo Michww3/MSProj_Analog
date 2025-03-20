@@ -35,8 +35,8 @@
                 <DataGridTextColumn Header="Assigned resource id" Binding="{Binding ResourceId, StringFormat=d}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="ImportDataButton" Content="Import data" HorizontalAlignment="Left" Margin="1810,0,0,949" VerticalAlignment="Bottom" Height="40" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ImportDataButton_Click"/>
-        <Button x:Name="ExportDataButton" Content="Export data" HorizontalAlignment="Left" Margin="1810,0,0,1014" VerticalAlignment="Bottom" Height="40" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ExportDataButton_Click"/>
+        <Button x:Name="ImportDataButton" Content="Import data" HorizontalAlignment="Left" Margin="1810,0,0,946" VerticalAlignment="Bottom" Height="45" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ImportDataButton_Click"/>
+        <Button x:Name="ExportDataButton" Content="Export data" HorizontalAlignment="Left" Margin="1810,0,0,1009" VerticalAlignment="Bottom" Height="45" Width="100" Style="{DynamicResource PrimaryButtonStyle}" Click="ExportDataButton_Click"/>
 
     </Grid>
 

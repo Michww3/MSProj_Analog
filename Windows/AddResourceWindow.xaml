@@ -11,7 +11,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="0,0,35,0">
-        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,1110,10" SelectionChanged="DataGrid_SelectionChanged" CanUserAddRows="False">
+        <DataGrid ItemsSource="{Binding Resources}" AutoGenerateColumns="False" Margin="10,10,1110,10" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="Resource Name" Binding="{Binding Name}" Width="*" />
@@ -31,7 +31,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="1280,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Resource type"/>
         <TextBlock HorizontalAlignment="Left" Margin="1278,229,0,0" TextWrapping="Wrap" Text="Standart rate" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="1278,279,0,0" TextWrapping="Wrap" Text="Overtime rate" VerticalAlignment="Top"/>
-        <ComboBox x:Name="ResourceTypeComboBox" HorizontalAlignment="Left" Margin="1288,202,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox x:Name="ResourceTypeComboBox" HorizontalAlignment="Left" Margin="1288,202,0,0" VerticalAlignment="Top" Width="100">
             <System:String>Material</System:String>
             <System:String>Labor</System:String>
         </ComboBox>

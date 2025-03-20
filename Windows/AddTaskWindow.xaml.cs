@@ -21,7 +21,7 @@ namespace MSProj_Analog
             set { _tasks = value; OnPropertyChanged("Tasks"); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public AddTaskWindow(ObservableCollection<ProjectTask> tasks)
         {
@@ -49,11 +49,6 @@ namespace MSProj_Analog
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -34,21 +34,26 @@ namespace MSProj_Analog.Windows
         {
             SeriesCollection = new SeriesCollection();
 
+            int index = 0;
             foreach (var task in tasks)
             {
                 double duration = (task.EndDate - task.StartDate).TotalDays;
+
+                // For cycle color pick
+                var taskColor = ConfigOptions.chartColors[index % ConfigOptions.chartColors.Count];
 
                 SeriesCollection.Add(new PieSeries
                 {
                     Title = task.Name,
                     Values = new ChartValues<double> { duration },
-                    DataLabels = true
+                    DataLabels = true,
+                    Fill = new SolidColorBrush(taskColor) // Применяем цвет
                 });
-            }
 
+                index++;
+            }
             PieChart.Series = SeriesCollection;
         }
-
 
         private void ExportToPDFButton_Click(object sender, RoutedEventArgs e)
         {
@@ -57,10 +62,9 @@ namespace MSProj_Analog.Windows
             if (saveFileDialog.ShowDialog() == true) // Открываем диалоговое окно
             {
                 ExportChart.ExportChartToPdf(saveFileDialog.FileName, PieChart);
-                MessageBox.Show("Экспорт завершен!", "Экспорт в PDF", MessageBoxButton.OK, MessageBoxImage.Information);
+                ConfigOptions.MessageBoxExport("Pdf export");
             }
         }
-
 
         private void ExportToSVGButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,7 +73,7 @@ namespace MSProj_Analog.Windows
             if (saveFileDialog.ShowDialog() == true)
             {
                 ExportChartToSvg(saveFileDialog.FileName);
-                MessageBox.Show("Экспорт завершен!", "Экспорт в SVG", MessageBoxButton.OK, MessageBoxImage.Information);
+                ConfigOptions.MessageBoxExport("Svg export");
             }
         }
 
@@ -78,32 +82,36 @@ namespace MSProj_Analog.Windows
             if (PieChart == null || SeriesCollection == null || SeriesCollection.Count == 0)
                 return;
 
-            // Размеры диаграммы
             var width = (int)PieChart.ActualWidth;
             var height = (int)PieChart.ActualHeight;
             var centerX = width / 2;
             var centerY = height / 2;
             var radius = Math.Min(centerX, centerY) - 10;
+            int legendWidth = 200; // Отступ для легенды
 
-            // Создаем SVG-документ
             var svgDoc = new SvgDocument
             {
-                Width = width,
+                Width = width + legendWidth,
                 Height = height
             };
 
             double totalValue = SeriesCollection.Sum(series => series.Values.Count > 0 ? (double)series.Values[0] : 0);
             double startAngle = 0;
-
-            Random random = new Random();
+            int legendY = 20; // Начальная позиция легенды
+            int index = 0;
 
             foreach (var series in SeriesCollection)
             {
                 if (series.Values.Count == 0) continue;
 
                 double value = (double)series.Values[0];
+                double percentage = (value / totalValue) * 100;
                 double sweepAngle = (value / totalValue) * 360;
                 double endAngle = startAngle + sweepAngle;
+
+                // Получаем цвет из `chartColors`
+                var wpfColor = ConfigOptions.chartColors[index % ConfigOptions.chartColors.Count]; // Берем цвет по индексу
+                var fillColor = System.Drawing.Color.FromArgb(wpfColor.R, wpfColor.G, wpfColor.B);
 
                 // Вычисляем координаты для дуги
                 double startX = centerX + radius * Math.Cos(startAngle * Math.PI / 180);
@@ -111,13 +119,9 @@ namespace MSProj_Analog.Windows
                 double endX = centerX + radius * Math.Cos(endAngle * Math.PI / 180);
                 double endY = centerY + radius * Math.Sin(endAngle * Math.PI / 180);
 
-                // Определяем, является ли угол больше 180 градусов
                 int largeArcFlag = sweepAngle > 180 ? 1 : 0;
 
-                // Генерируем случайный цвет
-                var fillColor = System.Drawing.Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-
-                // Создаем путь (сектор круга)
+                // Создаем сектор диаграммы
                 var path = new SvgPath
                 {
                     Fill = new SvgColourServer(fillColor),
@@ -125,20 +129,56 @@ namespace MSProj_Analog.Windows
                     StrokeWidth = 1
                 };
 
-                // Определяем команду для рисования сектора
                 string pathData = string.Format(CultureInfo.InvariantCulture,
                     "M {0},{1} L {2},{3} A {4},{4} 0 {5},1 {6},{7} Z",
-                    centerX, centerY,   // Начало от центра круга
-                    startX, startY,      // Линия от центра до начала дуги
-                    radius,              // Радиус дуги
-                    largeArcFlag,        // Флаг для больших углов
-                    endX, endY           // Завершение дуги
-                );
+                    centerX, centerY, startX, startY, radius, largeArcFlag, endX, endY);
 
                 path.PathData = SvgPathBuilder.Parse(pathData);
                 svgDoc.Children.Add(path);
 
+                // Добавляем текст в центр сектора
+                double midAngle = startAngle + sweepAngle / 2;
+                double textX = centerX + (radius * 0.6) * Math.Cos(midAngle * Math.PI / 180);
+                double textY = centerY + (radius * 0.6) * Math.Sin(midAngle * Math.PI / 180);
+
+                var text = new SvgText(series.Title)
+                {
+                    X = new SvgUnitCollection { new SvgUnit((float)textX) },
+                    Y = new SvgUnitCollection { new SvgUnit((float)textY) },
+                    Fill = new SvgColourServer(System.Drawing.Color.Black),
+                    FontSize = new SvgUnit(14),
+                    TextAnchor = SvgTextAnchor.Middle
+                };
+                svgDoc.Children.Add(text);
+
+                // Добавляем легенду справа
+                int legendX = width + 20;
+
+                var legendRect = new SvgRectangle
+                {
+                    X = new SvgUnit(legendX),
+                    Y = new SvgUnit(legendY),
+                    Width = new SvgUnit(20),
+                    Height = new SvgUnit(20),
+                    Fill = new SvgColourServer(fillColor),
+                    Stroke = new SvgColourServer(System.Drawing.Color.Black),
+                    StrokeWidth = 1
+                };
+                svgDoc.Children.Add(legendRect);
+
+                var legendText = new SvgText($"{series.Title} ({percentage:F1}%)")
+                {
+                    X = new SvgUnitCollection { new SvgUnit(legendX + 30) },
+                    Y = new SvgUnitCollection { new SvgUnit(legendY + 15) },
+                    Fill = new SvgColourServer(System.Drawing.Color.Black),
+                    FontSize = new SvgUnit(14),
+                    TextAnchor = SvgTextAnchor.Start
+                };
+                svgDoc.Children.Add(legendText);
+
+                legendY += 30; // Сдвигаем вниз для следующей задачи
                 startAngle = endAngle;
+                index++; // Переход к следующему цвету
             }
 
             // Сохраняем SVG в файл

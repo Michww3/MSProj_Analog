@@ -24,7 +24,6 @@ namespace MSProj_Analog.DTOs
 
         [Required]
         public decimal StandardRate { get; set; }
-
         public decimal? OvertimeRate { get; set; }
 
         [Required]

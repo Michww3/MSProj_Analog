@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MSProj_Analog.Config;
 using MSProj_Analog.DTOs;
 using MSProj_Analog.Enums;
 using MSProj_Analog.Helpers;
@@ -7,7 +6,6 @@ using MSProj_Analog.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using Xceed.Wpf.AvalonDock.Properties;
 
 namespace MSProj_Analog
 {
@@ -22,7 +20,7 @@ namespace MSProj_Analog
             set { _resources = value; OnPropertyChanged("Resources"); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public AddResourceWindow(ObservableCollection<Resource> resources)
         {
@@ -30,7 +28,6 @@ namespace MSProj_Analog
             Resources = resources;
             DataContext = this;
         }
-
 
         private void OnAddResourceClick(object sender, RoutedEventArgs e)
         {
@@ -50,7 +47,6 @@ namespace MSProj_Analog
                 return;
             }
 
-
             var newResource = new Resource(resource, name, standardRate, overtimeRate);
 
             addResourceService.AddResource(new AppDbContext(),Resources,newResource);
@@ -60,16 +56,5 @@ namespace MSProj_Analog
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private void DataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-        private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-
-
     }
 }
